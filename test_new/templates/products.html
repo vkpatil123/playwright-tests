@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Products{% endblock %} {% block
+content %}
+<h1>Product Table</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>SKU</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.sku }}</td>
+      <td>{{ product.quantity }}</td>
+      <td>{{ product.price }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="pagination">{{ pagination.links }}</div>
+{% endblock %}

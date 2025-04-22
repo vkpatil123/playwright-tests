@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Product 1",
+        "sku": "SKU0001",
+        "quantity": "3",
+        "price": "$10.00"
+    },
+    {
+        "name": "Product 2",
+        "sku": "SKU0002",
+        "quantity": "6",
+        "price": "$20.00"
+    },
+    {
+        "name": "Product 3",
+        "sku": "SKU0003",
+        "quantity": "9",
+        "price": "$30.00"
+    },
+    {
+        "name": "Product 4",
+        "sku": "SKU0004",
+        "quantity": "12",
+        "price": "$40.00"
+    },
+    {
+        "name": "Product 5",
+        "sku": "SKU0005",
+        "quantity": "15",
+        "price": "$50.00"
+    },
+    {
+        "name": "Product 6",
+        "sku": "SKU0006",
+        "quantity": "18",
+        "price": "$60.00"
+    },
+    {
+        "name": "Product 7",
+        "sku": "SKU0007",
+        "quantity": "21",
+        "price": "$70.00"
+    },
+    {
+        "name": "Product 8",
+        "sku": "SKU0008",
+        "quantity": "24",
+        "price": "$80.00"
+    },
+    {
+        "name": "Product 9",
+        "sku": "SKU0009",
+        "quantity": "27",
+        "price": "$90.00"
+    },
+    {
+        "name": "Product 10",
+        "sku": "SKU0010",
+        "quantity": "30",
+        "price": "$100.00"
+    }
+]

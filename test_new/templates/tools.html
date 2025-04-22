@@ -1,0 +1,103 @@
+{% extends "base.html" %} {% block title %}Tools - Product Wizard{% endblock %}
+{% block content %}
+<div class="wizard-container">
+  <h1>Product Data Wizard</h1>
+
+  <div class="progress-bar">
+    <div id="progress" class="progress-indicator" style="width: 25%"></div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="step1" class="wizard-step active">
+    <h2>Step 1: Select Data Source</h2>
+    <button
+      class="wizard-btn option"
+      onclick="selectOption(1, 'Local Database')"
+    >
+      Local Database
+    </button>
+    <button class="wizard-btn option" onclick="selectOption(1, 'External API')">
+      External API
+    </button>
+    <div class="wizard-nav">
+      <button class="wizard-btn" disabled>Previous</button>
+      <button class="wizard-btn" onclick="nextStep(2)">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="wizard-step">
+    <h2>Step 2: Choose Category</h2>
+    <button class="wizard-btn option" onclick="selectOption(2, 'Electronics')">
+      Electronics
+    </button>
+    <button class="wizard-btn option" onclick="selectOption(2, 'Clothing')">
+      Clothing
+    </button>
+    <div class="wizard-nav">
+      <button class="wizard-btn" onclick="prevStep(1)">Previous</button>
+      <button class="wizard-btn" onclick="nextStep(3)">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="step3" class="wizard-step">
+    <h2>Step 3: Select View Type</h2>
+    <button class="wizard-btn option" onclick="selectOption(3, 'Table View')">
+      Table View
+    </button>
+    <button class="wizard-btn option" onclick="selectOption(3, 'Grid View')">
+      Grid View
+    </button>
+    <div class="wizard-nav">
+      <button class="wizard-btn" onclick="prevStep(2)">Previous</button>
+      <button class="wizard-btn" onclick="nextStep(4)">Next</button>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="step4" class="wizard-step">
+    <h2>Step 4: View Products</h2>
+    <div id="selections"></div>
+    <div class="wizard-nav">
+      <button class="wizard-btn" onclick="prevStep(3)">Previous</button>
+      <button class="wizard-btn" onclick="viewProducts()">View Products</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const selections = {};
+
+  function updateProgress(step) {
+    document.getElementById("progress").style.width = `${step * 25}%`;
+  }
+
+  function selectOption(step, value) {
+    selections[`step${step}`] = value;
+    const buttons = document.querySelectorAll(`#step${step} .option`);
+    buttons.forEach((btn) => btn.classList.remove("selected"));
+    event.target.classList.add("selected");
+  }
+
+  function showStep(step) {
+    document
+      .querySelectorAll(".wizard-step")
+      .forEach((s) => s.classList.remove("active"));
+    document.getElementById(`step${step}`).classList.add("active");
+    updateProgress(step);
+  }
+
+  function nextStep(step) {
+    showStep(step);
+  }
+
+  function prevStep(step) {
+    showStep(step);
+  }
+
+  function viewProducts() {
+    window.location.href = "{{ url_for('product_table_nested') }}";
+  }
+</script>
+{% endblock %}

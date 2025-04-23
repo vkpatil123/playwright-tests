@@ -13,26 +13,26 @@ def save_storage(context):
     context.storage_state(path=SESSION_FILE)
 
 def load_or_login(playwright):
-    print("🌐 Launching browser...")
+    print(" Launching browser...")
     time.sleep(1)  # Delay before launch
     browser = playwright.chromium.launch(headless=False)
     context = None
 
     if os.path.exists(SESSION_FILE):
-        print("✅ Using existing session...")
+        print("Using existing session...")
         time.sleep(1)
         context = browser.new_context(storage_state=SESSION_FILE)
         page = context.new_page()
         page.goto("http://localhost:5000/dashboard")
         time.sleep(2)  # Delay after navigation
         if not page.locator("text='Logout'").is_visible():
-            print("⚠️ Session expired. Logging in again.")
+            print("Session expired. Logging in again.")
             time.sleep(1)
             os.remove(SESSION_FILE)
             context.close()
             return load_or_login(playwright)
     else:
-        print("🔐 Logging in with credentials...")
+        print("Logging in with credentials...")
         time.sleep(1)
         context = browser.new_context()
         page = context.new_page()
@@ -50,20 +50,20 @@ def load_or_login(playwright):
     return context
 
 def navigate_to_product_table(page):
-    print("🧭 Starting product wizard navigation...")
+    print("Starting product wizard navigation...")
     time.sleep(1)
 
     # Set viewport size to ensure everything is visible
     page.set_viewport_size({"width": 1280, "height": 800})
 
     # Navigate to Tools page
-    print("📊 Step 1: Navigating to Tools...")
+    print("Step 1: Navigating to Tools...")
     page.click("text='Tools'")
     time.sleep(2)
 
     try:
         # Step 1: Select Data Source
-        print("📊 Selecting Data Source...")
+        print("Selecting Data Source...")
         page.wait_for_selector("#step1", state="visible", timeout=5000)
         page.click("button:has-text('Local Database')")
         time.sleep(1)
@@ -76,7 +76,7 @@ def navigate_to_product_table(page):
         time.sleep(1)
 
         # Step 2: Choose Category
-        print("📂 Selecting Category...")
+        print("Selecting Category...")
         page.wait_for_selector("#step2", state="visible", timeout=5000)
         page.click("button:has-text('Electronics')")
         time.sleep(1)
@@ -89,7 +89,7 @@ def navigate_to_product_table(page):
         time.sleep(1)
 
         # Step 3: Select View Type
-        print("👀 Selecting View Type...")
+        print("Selecting View Type...")
         page.wait_for_selector("#step3", state="visible", timeout=5000)
         page.click("button:has-text('Table View')")
         time.sleep(1)
@@ -102,7 +102,7 @@ def navigate_to_product_table(page):
         time.sleep(1)
 
         # Step 4: View Products
-        print("🎯 Viewing Products...")
+        print("Viewing Products...")
         page.wait_for_selector("#step4", state="visible", timeout=5000)
         
         # Changed JavaScript to use proper selector
@@ -116,13 +116,13 @@ def navigate_to_product_table(page):
         page.wait_for_selector("table", state="visible", timeout=10000)
         time.sleep(2)
 
-        print("✅ Completed wizard navigation to product table.")
+        print("Completed wizard navigation to product table.")
         
     except Exception as e:
         # Take screenshot on error for debugging
         page.screenshot(path="error_screenshot.png")
-        print(f"❌ Navigation failed: {str(e)}")
-        print("📸 Screenshot saved as error_screenshot.png")
+        print(f"Navigation failed: {str(e)}")
+        print("Screenshot saved as error_screenshot.png")
         raise
 
     return page
@@ -149,26 +149,26 @@ def extract_product_data(page):
                 all_products.append(product)
                 time.sleep(0.2)  # Added small delay between rows
 
-        # Check if next button exists and is clickable
+        
         try:
             next_button = page.locator("button:has-text('Next')")
             if next_button.count() == 0 or not next_button.is_visible() or not next_button.is_enabled():
                 break
             print("   Loading next page...")
             next_button.click()
-            time.sleep(1.5)  # Increased delay after pagination
+            time.sleep(1.5)  
         except Exception as e:
-            print(f"⚠️ Pagination stopped (no next button or error): {e}")
+            print(f"Pagination stopped (no next button or error): {e}")
             break
 
-    print(f"✅ Extracted {len(all_products)} products.")
+    print(f"Extracted {len(all_products)} products.")
     return all_products
 
 
 def save_to_json(data, filename):
     with open(filename, "w") as f:
         json.dump(data, f, indent=4)
-    print(f"📁 Saved to {filename}")
+    print(f"Saved to {filename}")
 
 def main():
     with sync_playwright() as playwright:
@@ -182,4 +182,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("🚀 Script completed.")
+    print("Script completed.")
